@@ -265,3 +265,100 @@ void supprimerEtudiant(Etudiant *etudiants[], int *nombre) {
     }
     printf("Etudiant non trouve\n");
 }
+
+
+// Trie par ordre alphabétique et AFFICHE le résultat
+void trierAlphabetique(Etudiant *etudiants[], int nombre) {
+    // Vérifier s'il y a des étudiants
+    if (nombre == 0) {
+        printf("Aucun etudiant a trier\n");
+        return;
+    }
+    
+    // Tri à bulles par nom
+    for (int i = 0; i < nombre - 1; i++) {
+        for (int j = 0; j < nombre - i - 1; j++) {
+            if (strcmp(etudiants[j]->nom, etudiants[j+1]->nom) > 0) {
+                Etudiant *temp = etudiants[j];
+                etudiants[j] = etudiants[j+1];
+                etudiants[j+1] = temp;
+            }
+        }
+    }
+    
+    printf("\n=== LISTE TRIEE PAR ORDRE ALPHABETIQUE ===\n");
+    
+    // En-tête du tableau
+    printf("\n+---------------+---------------+---------------+---------------+\n");
+    printf("| Matricule     | Nom           | Prenom        | Filiere       |\n");
+    printf("+---------------+---------------+---------------+---------------+\n");
+    
+    // Afficher les étudiants triés
+    for (int i = 0; i < nombre; i++) {
+        printf("| %-13s | %-13s | %-13s | %-13s |\n",
+               etudiants[i]->matricule,
+               etudiants[i]->nom,
+               etudiants[i]->prenom,
+               etudiants[i]->filiere);
+    }
+    
+    printf("+---------------+---------------+---------------+---------------+\n");
+    printf("Total: %d etudiant(s)\n", nombre);
+}
+
+// Recherche dichotomique
+void rechercheDichotomique(Etudiant *etudiants[], int nombre) {
+    if (nombre == 0) {
+        printf("Liste vide\n");
+        return;
+    }
+    
+    // Vérifier si liste triée
+    int estTrie = 1;
+    for (int i = 0; i < nombre - 1; i++) {
+        if (strcmp(etudiants[i]->nom, etudiants[i+1]->nom) > 0) {
+            estTrie = 0;
+            break;
+        }
+    }
+    
+    if (!estTrie) {
+        printf("Liste non triee, tri en cours...\n");
+        
+        // Tri sans affichage pour la recherche dichotomique
+        for (int i = 0; i < nombre - 1; i++) {
+            for (int j = 0; j < nombre - i - 1; j++) {
+                if (strcmp(etudiants[j]->nom, etudiants[j+1]->nom) > 0) {
+                    Etudiant *temp = etudiants[j];
+                    etudiants[j] = etudiants[j+1];
+                    etudiants[j+1] = temp;
+                }
+            }
+        }
+    }
+    
+    char nom[50];
+    printf("Nom a rechercher: ");
+    scanf("%s", nom);
+    
+    int debut = 0, fin = nombre - 1;
+    while (debut <= fin) {
+        int milieu = (debut + fin) / 2;
+        int cmp = strcmp(etudiants[milieu]->nom, nom);
+        
+        if (cmp == 0) {
+            printf("\nEtudiant trouve:\n");
+            printf("Matricule: %s\n", etudiants[milieu]->matricule);
+            printf("Nom: %s\n", etudiants[milieu]->nom);
+            printf("Prenom: %s\n", etudiants[milieu]->prenom);
+            printf("Date: %02d/%02d/%04d\n", etudiants[milieu]->jour, etudiants[milieu]->mois, etudiants[milieu]->annee);
+            printf("Filiere: %s\n", etudiants[milieu]->filiere);
+            return;
+        } else if (cmp < 0) {
+            debut = milieu + 1;
+        } else {
+            fin = milieu - 1;
+        }
+    }
+    printf("Etudiant non trouve\n");
+}
