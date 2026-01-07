@@ -1,4 +1,4 @@
-#include "test.h"
+#include "etudiant.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,7 +7,8 @@
 // Vérifie si un matricule existe
 int matriculeExiste(Etudiant *etudiants[], int nombre, char *matricule) {
     for (int i = 0; i < nombre; i++) {
-        if (strcmp(etudiants[i]->matricule, matricule) == 0) return 1;
+        if (strcmp(etudiants[i]->matricule, matricule) == 0) 
+        return 1;
     }
     return 0;
 }
