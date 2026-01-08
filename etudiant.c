@@ -379,3 +379,74 @@ void calculerAgeEtudiant(Etudiant *etudiants[], int nombre) {
     }
     printf("Etudiant non trouve\n");
 }
+
+// Trie par filière et AFFICHE le résultat
+void trierParFiliere(Etudiant *etudiants[], int nombre) {
+    // Vérifier s'il y a des étudiants
+    if (nombre == 0) {
+        printf("Aucun etudiant a trier\n");
+        return;
+    }
+    
+    // Tri par filière (puis par nom si même filière)
+    for (int i = 0; i < nombre - 1; i++) {
+        for (int j = 0; j < nombre - i - 1; j++) {
+            int cmp = strcmp(etudiants[j]->filiere, etudiants[j+1]->filiere);
+            if (cmp > 0 || (cmp == 0 && strcmp(etudiants[j]->nom, etudiants[j+1]->nom) > 0)) {
+                Etudiant *temp = etudiants[j];
+                etudiants[j] = etudiants[j+1];
+                etudiants[j+1] = temp;
+            }
+        }
+    }
+    
+    printf("\n=== LISTE TRIEE PAR FILIERE ===\n");
+    
+    // En-tête du tableau
+    printf("\n+---------------+---------------+---------------+---------------+\n");
+    printf("| Filiere                    | Nom           | Prenom        | Matricule     |\n");
+    printf("+----------------------------+---------------+---------------+---------------+\n");
+    
+    // Afficher les étudiants triés
+    for (int i = 0; i < nombre; i++) {
+        printf("| %-26s | %-13s | %-13s | %-13s |\n",
+               etudiants[i]->filiere,
+               etudiants[i]->nom,
+               etudiants[i]->prenom,
+               etudiants[i]->matricule);
+    }
+    
+    printf("+----------------------------+---------------+---------------+---------------+\n");
+    printf("Total: %d etudiant(s)\n", nombre);
+}
+
+// Affiche tous les étudiants dans un tableau
+void afficherTousEtudiants(Etudiant *etudiants[], int nombre) {
+    if (nombre == 0) {
+        printf("Aucun etudiant\n");
+        return;
+    }
+    
+    printf("\n+---------------+---------------+---------------+---------------+---------------+---------------+-------------------------+\n");
+    printf("| Matricule     | Nom           | Prenom        | Date naiss.   | Departement   | Region        | Filiere                 |\n");
+    printf("+---------------+---------------+---------------+---------------+---------------+---------------+-------------------------+\n");
+    
+    // Données
+    for (int i = 0; i < nombre; i++) {
+        char date[11];
+        sprintf(date, "%02d/%02d/%04d", etudiants[i]->jour, etudiants[i]->mois, etudiants[i]->annee);
+        
+        printf("| %-13s | %-13s | %-13s | %-13s | %-13s | %-13s | %-23s |\n",
+               etudiants[i]->matricule,
+               etudiants[i]->nom,
+               etudiants[i]->prenom,
+               date,
+               etudiants[i]->departement,
+               etudiants[i]->region,
+               etudiants[i]->filiere);
+    }
+    
+    // Bas du tableau
+    printf("+---------------+---------------+---------------+---------------+---------------+---------------+-------------------------+\n");
+    printf("Total: %d etudiant(s)\n", nombre);
+}
