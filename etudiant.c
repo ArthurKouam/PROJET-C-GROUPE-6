@@ -450,3 +450,18 @@ void afficherTousEtudiants(Etudiant *etudiants[], int nombre) {
     printf("+---------------+---------------+---------------+---------------+---------------+---------------+-------------------------+\n");
     printf("Total: %d etudiant(s)\n", nombre);
 }
+// Affiche le menu principal
+void afficherMenu() {
+    printf("\n PROJET C GESTION DES ETUTIANTS  GROUPE 4 : MENU PRINCIPAL \n");
+    printf("1. Enregistrer un etudiant\n");
+    printf("2. Modifier un etudiant\n");
+    printf("3. Rechercher un etudiant\n");
+    printf("4. Supprimer un etudiant\n");
+    printf("5. Trier par ordre alphabetique\n");
+    printf("6. Recherche dichotomique\n");
+    printf("7. Calcul de l'age de l'etudiant\n");
+    printf("8. Trier par filiere\n");
+    printf("9. Afficher la liste complete des etudiants\n");
+    printf("10. Sauvegarder et quitter\n");
+    printf("QUELLE OPTION DU MENU VOUS INTERESSE: ");
+}
